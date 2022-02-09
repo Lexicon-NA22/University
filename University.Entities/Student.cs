@@ -17,5 +17,9 @@ namespace University.Entities
         public string FullName => $"{FirstName} {LastName}";
         public string Email { get; set; }
 
+        //Nav prop
+        public Adress Adress { get; set; }
+
+
     }
 }

@@ -14,5 +14,11 @@ namespace University.Entities
         public string Street { get; set; }
         public string ZipCode { get; set; }
         public string City { get; set; }
+
+        //Foregn key
+        public int StudentId { get; set; }
+
+        //Nav prop
+        public Student Student { get; set; }
     }
 }
