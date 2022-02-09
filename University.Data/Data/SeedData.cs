@@ -11,7 +11,7 @@ namespace University.Data.Data
 {
     public class SeedData
     {
-        private static Faker faker;
+        private static Faker faker = null!;
 
         public static async Task InitAsync(UniversityContext db)
         {
@@ -22,7 +22,55 @@ namespace University.Data.Data
             var students = GetStudents();
             await db.AddRangeAsync(students);
 
+            var courses = GetCourses();
+            await db.AddRangeAsync(courses);
+
+            var enrollments = GetEnrollments(students, courses);
+            await db.AddRangeAsync(enrollments);
+
+
             await db.SaveChangesAsync();
+        }
+
+        private static IEnumerable<Enrollment> GetEnrollments(IEnumerable<Student> students, IEnumerable<Course> courses)
+        {
+            var enrollments = new List<Enrollment>();
+
+            foreach (var student in students)
+            {
+                foreach (var course in courses)
+                {
+                    if (faker.Random.Int(0, 5) == 0)
+                    {
+                        var enrollment = new Enrollment
+                        {
+                            Course = course,
+                            Student = student,
+                            Grade = faker.Random.Int(1, 5)
+                        };
+                        enrollments.Add(enrollment);
+                    }
+                }
+            }
+
+            return enrollments;
+        }
+
+        private static IEnumerable<Course> GetCourses()
+        {
+            var courses = new List<Course>();
+
+            for (int i = 0; i < 20; i++)
+            {
+                var course = new Course
+                {
+                    Title = faker.Company.CatchPhrase()
+                };
+
+                courses.Add(course);
+            }
+
+            return courses;
         }
 
         private static IEnumerable<Student> GetStudents()

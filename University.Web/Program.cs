@@ -20,7 +20,17 @@ using(var scope = app.Services.CreateScope())
     db.Database.EnsureDeleted();
     db.Database.Migrate();
 
-    SeedData.InitAsync(db).GetAwaiter().GetResult();
+    try
+    {
+         SeedData.InitAsync(db).GetAwaiter().GetResult();
+    }
+    catch (Exception e)
+    {
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(string.Join(" ", e.Message));
+        //throw;
+    }
+
 }
 
 // Configure the HTTP request pipeline.
