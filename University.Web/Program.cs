@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using University.Data.Data;
+using University.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,26 +13,8 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-using(var scope = app.Services.CreateScope())
-{
-    var serviceProvider = scope.ServiceProvider;
-    var db = serviceProvider.GetRequiredService<UniversityContext>();
-
-    db.Database.EnsureDeleted();
-    db.Database.Migrate();
-
-    try
-    {
-         SeedData.InitAsync(db).GetAwaiter().GetResult();
-    }
-    catch (Exception e)
-    {
-        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(string.Join(" ", e.Message));
-        //throw;
-    }
-
-}
+//Seed
+app.SeedDataAsync().GetAwaiter().GetResult();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
