@@ -23,6 +23,8 @@ namespace University.Web.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
+            var students = await _context.Student.Include(s => s.Adress).ToListAsync();
+
             return View(await _context.Student.ToListAsync());
         }
 

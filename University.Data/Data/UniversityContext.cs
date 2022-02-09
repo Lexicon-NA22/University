@@ -30,6 +30,18 @@ namespace University.Data.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // modelBuilder.Entity<Student>().OwnsOne(s => s.Name).ToTable("Name");
+            modelBuilder.Entity<Student>()
+                        .OwnsOne(s => s.Name)
+                        .Property(n => n.FirstName)
+                        .HasColumnName("FirstName"); 
+            
+            modelBuilder.Entity<Student>()
+                        .OwnsOne(s => s.Name)
+                        .Property(n => n.LastName)
+                        .HasColumnName("LastName");
+
+
            // modelBuilder.Entity<Enrollment>().HasKey(e => new { e.StudentId, e.CourseId });
             modelBuilder.Entity<Course>().Property(c => c.Title).IsRequired();
 

@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 
 namespace University.Entities
 {
-    public class Student
+    public class Student 
     {
         public int Id { get; set; }
         public string Avatar { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string FullName => $"{FirstName} {LastName}";
+        public Name Name { get; set; }
         public string Email { get; set; }
 
         //Nav prop
@@ -32,16 +30,14 @@ namespace University.Entities
         private Student()
         {
             Avatar = null!;
-            FirstName = null!;
-            LastName = null!;
+            Name = null!;
             Email = null!;
         }
 
-        public Student(string avatar, string firstName, string lastName, string email)
+        public Student(string avatar, string email, Name name)
         {
             Avatar = avatar;
-            FirstName = firstName;
-            LastName = lastName;
+            Name = name;
             Email = email;
         }
 

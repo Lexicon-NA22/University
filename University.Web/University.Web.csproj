@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Students\Create.cshtml" />
+    <Content Remove="Views\Students\Delete.cshtml" />
+    <Content Remove="Views\Students\Details.cshtml" />
+    <Content Remove="Views\Students\Edit.cshtml" />
+    <Content Remove="Views\Students\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -18,6 +26,10 @@
   <ItemGroup>
     <ProjectReference Include="..\University.Data\University.Data.csproj" />
     <ProjectReference Include="..\University.Entities\University.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Students\" />
   </ItemGroup>
 
 </Project>

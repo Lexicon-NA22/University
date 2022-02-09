@@ -84,7 +84,7 @@ namespace University.Data.Data
                 var avatar = faker.Internet.Avatar();
                 var email = faker.Internet.Email($"{fName} {lName}");
 
-                var student = new Student(avatar, fName, lName, email)
+                var student = new Student(avatar, email, new Name(fName, lName))
                 {
                     //FirstName = fName,
                     //LastName = lName,
