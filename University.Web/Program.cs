@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using University.Data.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<UniversityContext>(options =>
@@ -10,6 +11,17 @@ builder.Services.AddDbContext<UniversityContext>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using(var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var db = serviceProvider.GetRequiredService<UniversityContext>();
+
+    db.Database.EnsureDeleted();
+    db.Database.Migrate();
+
+    SeedData.InitAsync(db).GetAwaiter().GetResult();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
