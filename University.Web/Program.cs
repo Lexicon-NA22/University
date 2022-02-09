@@ -1,4 +1,10 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using University.Data.Data;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<UniversityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UniversityContext")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
