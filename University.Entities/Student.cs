@@ -20,6 +20,12 @@ namespace University.Entities
         //Nav prop
         public Adress Adress { get; set; }
 
+        //Con 2
+        //public ICollection<Enrollment> Enrollments { get; set; }
+
+        //Con 3 - Con 1 + Con 2
+        //Con 4
+        public ICollection<Enrollment> Enrollments { get; set; }
 
     }
 }

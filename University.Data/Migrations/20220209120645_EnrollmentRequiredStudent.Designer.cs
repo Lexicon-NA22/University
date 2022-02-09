@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using University.Data.Data;
 
@@ -10,9 +11,10 @@ using University.Data.Data;
 namespace University.Data.Migrations
 {
     [DbContext(typeof(UniversityContext))]
-    partial class UniversityContextModelSnapshot : ModelSnapshot
+    [Migration("20220209120645_EnrollmentRequiredStudent")]
+    partial class EnrollmentRequiredStudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,22 +51,6 @@ namespace University.Data.Migrations
                     b.ToTable("Adress");
                 });
 
-            modelBuilder.Entity("University.Entities.Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Course");
-                });
-
             modelBuilder.Entity("University.Entities.Enrollment", b =>
                 {
                     b.Property<int>("Id")
@@ -73,9 +59,6 @@ namespace University.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Grade")
                         .HasColumnType("int");
 
@@ -83,8 +66,6 @@ namespace University.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
 
                     b.HasIndex("StudentId");
 
@@ -129,26 +110,13 @@ namespace University.Data.Migrations
 
             modelBuilder.Entity("University.Entities.Enrollment", b =>
                 {
-                    b.HasOne("University.Entities.Course", "Course")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("University.Entities.Student", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Course");
-
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("University.Entities.Course", b =>
-                {
-                    b.Navigation("Enrollments");
                 });
 
             modelBuilder.Entity("University.Entities.Student", b =>

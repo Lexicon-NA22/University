@@ -15,6 +15,18 @@ namespace University.Entities
 
         //Convention 1 - En student kan finnas på många olika Enrollments i tabellen
         //               Kommer generera ett nullable int foreign key som ett shadow property
+        //public Student Student { get; set; }
+
+        //Con 3 - Con1  + Con 2
+        //public Student Student { get; set; }
+
+        //Con 4
+        public int StudentId { get; set; }
         public Student Student { get; set; }
+
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
+
+
     }
 }
