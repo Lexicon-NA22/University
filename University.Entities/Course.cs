@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#nullable disable
+//#nullable disable
 
 namespace University.Entities
 {
@@ -17,8 +17,18 @@ namespace University.Entities
         public string Title { get; set; }
 
         //Nav prop
-        public ICollection<Enrollment> Enrollments { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
-        public ICollection<Student> Students { get; set; }
+        public ICollection<Student> Students { get; set; } = new List<Student>();
+
+        private Course()
+        {
+            Title = null!;
+        }
+
+        public Course(string title)
+        {
+            Title = title;
+        }
     }
 }

@@ -62,10 +62,10 @@ namespace University.Data.Data
 
             for (int i = 0; i < 20; i++)
             {
-                var course = new Course
-                {
-                    Title = faker.Company.CatchPhrase()
-                };
+                var course = new Course(faker.Company.CatchPhrase());
+                //{
+                //    Title = faker.Company.CatchPhrase()
+                //};
 
                 courses.Add(course);
             }
@@ -81,13 +81,15 @@ namespace University.Data.Data
             {
                 var fName = faker.Name.FirstName();
                 var lName = faker.Name.LastName();
+                var avatar = faker.Internet.Avatar();
+                var email = faker.Internet.Email($"{fName} {lName}");
 
-                var student = new Student
+                var student = new Student(avatar, fName, lName, email)
                 {
-                    FirstName = fName,
-                    LastName = lName,
-                    Email = faker.Internet.Email($"{fName} {lName}"),
-                    Avatar = faker.Internet.Avatar(),
+                    //FirstName = fName,
+                    //LastName = lName,
+                    //Email = faker.Internet.Email($"{fName} {lName}"),
+                    //Avatar = faker.Internet.Avatar(),
                     Adress = new Adress
                     {
                         City = faker.Address.City(),
