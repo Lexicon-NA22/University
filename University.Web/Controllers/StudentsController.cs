@@ -31,9 +31,13 @@ namespace University.Web.Controllers
         {
             //var test = db.Student.Include(s => s.Enrollments).ThenInclude(e => e.Course).ToList();
             //var test2 = db.Student.Include(s => s.Adress).ToList(); //.ThenInclude(e => e.Course).ToList();
-            var model = db.Student.OrderByDescending(s => s.Id)
-                                  .Select(s => new StudentIndexViewModel(s.Id, s.Avatar, s.Name.FullName, s.Adress.Street))
-                                  .Take(10);
+            //var model = db.Student.OrderByDescending(s => s.Id)
+            //                      .Select(s => new StudentIndexViewModel(s.Id, s.Avatar, s.Name.FullName, s.Adress.Street))
+            //                      .Take(10);
+
+            var model = mapper.ProjectTo<StudentIndexViewModel>(db.Student)
+                              .OrderByDescending(s => s.Id)
+                              .Take(10);
 
             return View(await model.ToListAsync());
         }
@@ -46,8 +50,12 @@ namespace University.Web.Controllers
                 return NotFound();
             }
 
-            var student = await db.Student
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var student = await db.Student
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+
+            var student = await mapper.ProjectTo<StudentDetailsViewModel>(db.Student)
+                                      .FirstOrDefaultAsync(s => s.Id == id);
+
             if (student == null)
             {
                 return NotFound();
