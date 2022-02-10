@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Bogus;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +16,14 @@ namespace University.Web.Controllers
     public class StudentsController : Controller
     {
         private readonly UniversityContext db;
+        private readonly IMapper mapper;
+        private readonly Faker faker;
 
-        public StudentsController(UniversityContext context)
+        public StudentsController(UniversityContext context, IMapper mapper)
         {
             db = context;
+            this.mapper = mapper;
+            faker = new Faker("sv");
         }
 
         // GET: Students
@@ -25,7 +31,9 @@ namespace University.Web.Controllers
         {
             //var test = db.Student.Include(s => s.Enrollments).ThenInclude(e => e.Course).ToList();
             //var test2 = db.Student.Include(s => s.Adress).ToList(); //.ThenInclude(e => e.Course).ToList();
-            var model = db.Student.Select(s => new StudentIndexViewModel(s.Id, s.Avatar, s.Name.FullName, s.Adress.Street));
+            var model = db.Student.OrderByDescending(s => s.Id)
+                                  .Select(s => new StudentIndexViewModel(s.Id, s.Avatar, s.Name.FullName, s.Adress.Street))
+                                  .Take(10);
 
             return View(await model.ToListAsync());
         }
@@ -59,15 +67,25 @@ namespace University.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Avatar,FirstName,LastName,Email")] Student student)
+        public async Task<IActionResult> Create(StudentCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var student = new Student(faker.Internet.Avatar(), viewModel.Email, new Name(viewModel.FirstName, viewModel.LastName))
+                {
+                    Adress = new Adress
+                    {
+                        City = viewModel.City,
+                        Street = viewModel.Street,
+                        ZipCode = viewModel.ZipCode
+                    }
+                };
+
                 db.Add(student);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(viewModel);
         }
 
         // GET: Students/Edit/5

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using University.Data.Automapper;
 using University.Data.Data;
 using University.Web.Extensions;
 
@@ -10,6 +11,8 @@ builder.Services.AddDbContext<UniversityContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAutoMapper(typeof(UniversityMappings));
 
 var app = builder.Build();
 
