@@ -13,19 +13,21 @@ namespace University.Web.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly UniversityContext _context;
+        private readonly UniversityContext db;
 
         public StudentsController(UniversityContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            var students = await _context.Student.Include(s => s.Adress).ToListAsync();
+            //var test = db.Student.Include(s => s.Enrollments).ThenInclude(e => e.Course).ToList();
+            //var test2 = db.Student.Include(s => s.Adress).ToList(); //.ThenInclude(e => e.Course).ToList();
+            var model = db.Student.Select(s => new StudentIndexViewModel(s.Id, s.Avatar, s.Name.FullName, s.Adress.Street));
 
-            return View(await _context.Student.ToListAsync());
+            return View(await model.ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -36,7 +38,7 @@ namespace University.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var student = await db.Student
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -61,8 +63,8 @@ namespace University.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
+                db.Add(student);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(student);
@@ -76,7 +78,7 @@ namespace University.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student.FindAsync(id);
+            var student = await db.Student.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -100,8 +102,8 @@ namespace University.Web.Controllers
             {
                 try
                 {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
+                    db.Update(student);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,7 +129,7 @@ namespace University.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var student = await db.Student
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -142,15 +144,15 @@ namespace University.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Student.FindAsync(id);
-            _context.Student.Remove(student);
-            await _context.SaveChangesAsync();
+            var student = await db.Student.FindAsync(id);
+            db.Student.Remove(student);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
         {
-            return _context.Student.Any(e => e.Id == id);
+            return db.Student.Any(e => e.Id == id);
         }
     }
 }

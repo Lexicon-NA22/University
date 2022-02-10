@@ -11,7 +11,6 @@
     <Content Remove="Views\Students\Delete.cshtml" />
     <Content Remove="Views\Students\Details.cshtml" />
     <Content Remove="Views\Students\Edit.cshtml" />
-    <Content Remove="Views\Students\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,16 +19,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\University.Data\University.Data.csproj" />
     <ProjectReference Include="..\University.Entities\University.Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Students\" />
   </ItemGroup>
 
 </Project>
