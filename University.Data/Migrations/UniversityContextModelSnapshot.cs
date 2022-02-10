@@ -46,7 +46,7 @@ namespace University.Data.Migrations
                     b.HasIndex("StudentId")
                         .IsUnique();
 
-                    b.ToTable("Adress");
+                    b.ToTable("Adress", (string)null);
                 });
 
             modelBuilder.Entity("University.Entities.Course", b =>
@@ -63,7 +63,7 @@ namespace University.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course");
+                    b.ToTable("Course", (string)null);
                 });
 
             modelBuilder.Entity("University.Entities.Enrollment", b =>
@@ -89,7 +89,7 @@ namespace University.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Enrollment");
+                    b.ToTable("Enrollment", (string)null);
                 });
 
             modelBuilder.Entity("University.Entities.Student", b =>
@@ -110,7 +110,7 @@ namespace University.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("University.Entities.Adress", b =>
@@ -145,7 +145,7 @@ namespace University.Data.Migrations
 
             modelBuilder.Entity("University.Entities.Student", b =>
                 {
-                    b.OwnsOne("University.Entities.Name", "Name", b1 =>
+                    b.OwnsOne("University.Entities.Student.Name#University.Entities.Name", "Name", b1 =>
                         {
                             b1.Property<int>("StudentId")
                                 .HasColumnType("int");
@@ -162,7 +162,7 @@ namespace University.Data.Migrations
 
                             b1.HasKey("StudentId");
 
-                            b1.ToTable("Student");
+                            b1.ToTable("Student", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("StudentId");
