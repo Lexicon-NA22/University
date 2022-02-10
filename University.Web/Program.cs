@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using University.Data.Automapper;
 using University.Data.Data;
+using University.Web.Automapper;
 using University.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

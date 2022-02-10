@@ -71,15 +71,18 @@ namespace University.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var student = new Student(faker.Internet.Avatar(), viewModel.Email, new Name(viewModel.FirstName, viewModel.LastName))
-                {
-                    Adress = new Adress
-                    {
-                        City = viewModel.City,
-                        Street = viewModel.Street,
-                        ZipCode = viewModel.ZipCode
-                    }
-                };
+                //var student = new Student(faker.Internet.Avatar(), viewModel.Email, new Name(viewModel.FirstName, viewModel.LastName))
+                //{
+                //    Adress = new Adress
+                //    {
+                //        City = viewModel.City,
+                //        Street = viewModel.Street,
+                //        ZipCode = viewModel.ZipCode
+                //    }
+                //};
+
+                var student = mapper.Map<Student>(viewModel);
+                student.Avatar = faker.Internet.Avatar();
 
                 db.Add(student);
                 await db.SaveChangesAsync();
