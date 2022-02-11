@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using University.Data.Data;
 using University.Web.Automapper;
 using University.Web.Extensions;
+using University.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddDbContext<UniversityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UniversityContext")));
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews();// opt => opt.Filters.Add(typeof(ModelIsValid)));
 
 builder.Services.AddAutoMapper(typeof(UniversityMappings));
 

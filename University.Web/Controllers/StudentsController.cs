@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using University.Data.Data;
 using University.Entities;
+using University.Web.Filters;
 
 namespace University.Web.Controllers
 {
@@ -75,10 +76,10 @@ namespace University.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ModelIsValid]
         public async Task<IActionResult> Create(StudentCreateViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
+           
                 //var student = new Student(faker.Internet.Avatar(), viewModel.Email, new Name(viewModel.FirstName, viewModel.LastName))
                 //{
                 //    Adress = new Adress
@@ -95,8 +96,8 @@ namespace University.Web.Controllers
                 db.Add(student);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(viewModel);
+            
+          //  return View(viewModel);
         }
 
         // GET: Students/Edit/5
