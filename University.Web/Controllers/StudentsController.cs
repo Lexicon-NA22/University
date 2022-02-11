@@ -14,6 +14,7 @@ using University.Web.Filters;
 
 namespace University.Web.Controllers
 {
+    [ModelNotNull]
     public class StudentsController : Controller
     {
         private readonly UniversityContext db;
@@ -44,23 +45,12 @@ namespace University.Web.Controllers
         }
 
         // GET: Students/Details/5
+        [RequiredParam("id")]
+        //[ModelNotNull]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            //var student = await db.Student
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-
             var student = await mapper.ProjectTo<StudentDetailsViewModel>(db.Student)
                                       .FirstOrDefaultAsync(s => s.Id == id);
-
-            if (student == null)
-            {
-                return NotFound();
-            }
 
             return View(student);
         }
@@ -68,7 +58,8 @@ namespace University.Web.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new StudentCreateViewModel();
+            return View(model);
         }
 
         // POST: Students/Create
