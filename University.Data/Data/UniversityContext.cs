@@ -34,6 +34,16 @@ namespace University.Data.Data
 
             modelBuilder.Entity<Student>().Property<DateTime>("Edited");
 
+            modelBuilder.Entity<Course>()
+                         .ToTable("Course", c => c.IsTemporal());
+                             //c =>
+                             //{
+                             //    c.UseHistoryTable("NewTableName");
+                             //    c.HasPeriodStart("NewStart");
+                             //    c.HasPeriodEnd("NewEnd");
+                             //}
+                             //));
+
             //foreach (var entity in modelBuilder.Model.GetEntityTypes())
             //{
             //    entity.AddProperty("Edited", typeof(DateTime));

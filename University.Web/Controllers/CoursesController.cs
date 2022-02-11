@@ -15,6 +15,18 @@ namespace University.Web.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
+            var courses = db.Course.Select(c => new {c.Title, Start = EF.Property<DateTime>(c, "PeriodStart")}).ToList();
+
+            var all = db.Course.TemporalAll();
+
+            var ch = db.Course.TemporalAll()
+                       .Where(c => c.Title == "Seamless systemic website")
+                       .Select(c => new
+                       {
+                           c.Title,
+                           Added = EF.Property<DateTime>(c, "PeriodStart").ToString()
+                       })
+                       .OrderBy(c => c.Added);
 
             return View(await db.Course.ToListAsync());
         }

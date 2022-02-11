@@ -32,7 +32,7 @@ namespace University.Web.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            var m = db.Student.Where(s => EF.Property<DateTime>(s, "Edited") >= DateTime.Now.AddDays(-1));
+           // var m = db.Student.Where(s => EF.Property<DateTime>(s, "Edited") >= DateTime.Now.AddDays(-1));
 
             var model = mapper.ProjectTo<StudentIndexViewModel>(db.Student)
                               .OrderByDescending(s => s.Id)
