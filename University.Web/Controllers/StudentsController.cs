@@ -32,11 +32,7 @@ namespace University.Web.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            //var test = db.Student.Include(s => s.Enrollments).ThenInclude(e => e.Course).ToList();
-            //var test2 = db.Student.Include(s => s.Adress).ToList(); //.ThenInclude(e => e.Course).ToList();
-            //var model = db.Student.OrderByDescending(s => s.Id)
-            //                      .Select(s => new StudentIndexViewModel(s.Id, s.Avatar, s.Name.FullName, s.Adress.Street))
-            //                      .Take(10);
+            var m = db.Student.Where(s => EF.Property<DateTime>(s, "Edited") >= DateTime.Now.AddDays(-1));
 
             var model = mapper.ProjectTo<StudentIndexViewModel>(db.Student)
                               .OrderByDescending(s => s.Id)
@@ -130,6 +126,8 @@ namespace University.Web.Controllers
                                                 .FirstOrDefaultAsync(s => s.Id == id);
 
                   mapper.Map(viewModel, student);
+
+                   // db.Entry(student).Property("Edited").CurrentValue = DateTime.Now;
 
                     db.Update(student);
                     await db.SaveChangesAsync();

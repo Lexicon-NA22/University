@@ -34,6 +34,11 @@ namespace University.Data.Data
 
             modelBuilder.Entity<Student>().Property<DateTime>("Edited");
 
+            //foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            //{
+            //    entity.AddProperty("Edited", typeof(DateTime));
+            //}
+
             // modelBuilder.Entity<Student>().OwnsOne(s => s.Name).ToTable("Name");
             modelBuilder.Entity<Student>()
                         .OwnsOne(s => s.Name)
@@ -58,6 +63,18 @@ namespace University.Data.Data
                            // e => e.HasKey(e => new { e.StudentId, e.CourseId })
                             );
 
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ChangeTracker.DetectChanges();
+
+            foreach (var entry in ChangeTracker.Entries<Student>().Where(e => e.State == EntityState.Modified))
+            {
+                entry.Property("Edited").CurrentValue = DateTime.Now;
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
         }
 
     }
