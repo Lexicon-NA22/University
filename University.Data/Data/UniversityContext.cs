@@ -32,6 +32,8 @@ namespace University.Data.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Student>().Property<DateTime>("Edited");
+
             // modelBuilder.Entity<Student>().OwnsOne(s => s.Name).ToTable("Name");
             modelBuilder.Entity<Student>()
                         .OwnsOne(s => s.Name)

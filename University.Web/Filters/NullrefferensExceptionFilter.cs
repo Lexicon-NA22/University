@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace University.Web.Filters
 {
-    public class NullRefferenseFilter : ExceptionFilterAttribute
+    public class NullRefferenseExceptionFilter : ExceptionFilterAttribute
     {
 
         public override void OnException(ExceptionContext context)

@@ -21,6 +21,8 @@ namespace University.Web.Automapper
                        dest => dest.Attending,
                        from => from.MapFrom(s => s.Enrollments.Count));
 
+            CreateMap<Student, StudentEditViewModel>().ReverseMap();
+
         }
     }
 }

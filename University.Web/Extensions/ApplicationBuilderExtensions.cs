@@ -10,8 +10,8 @@ public static class ApplicationBuilderExtensions
             var serviceProvider = scope.ServiceProvider;
             var db = serviceProvider.GetRequiredService<UniversityContext>();
 
-           // db.Database.EnsureDeleted();
-           // db.Database.Migrate();
+            //db.Database.EnsureDeleted();
+            //db.Database.Migrate();
 
             try
             {

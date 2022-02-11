@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Content Remove="Views\Students\Delete.cshtml" />
-    <Content Remove="Views\Students\Edit.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
